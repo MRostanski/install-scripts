@@ -20,6 +20,13 @@ apt-cache policy docker-ce
 apt install docker-ce
 usermod -aG docker ubuntu
 
+VERSION=$(curl -Ls https://github.com/helm/helm/releases/latest |grep 'href="/helm/helm/releases/tag/v3.' | grep -v no-underline  | cut -d '"' -f 2 | awk '{n=split($NF,a,"/");print a[n]}') 
+curl -O https://get.helm.sh/helm-${VERSION}-linux-amd64.tar.gz
+tar xzvf helm-${VERSION}-linux-amd64.tar.gz
+mv linux-amd64/helm /usr/local/bin
+rm -rf linux-amd64
+rm helm-${VERSION}-linux-amd64.tar.gz
+
 minikube start --vm-driver=none
 minikube status
 
