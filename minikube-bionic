@@ -1,0 +1,30 @@
+#!/bin/bash
+
+apt-get update
+apt-get upgrade
+apt-get -y install apt-transport-https wget curl unzip ca-certificates software-properties-common
+cd /tmp
+
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube-linux-amd64
+mv minikube-linux-amd64 /usr/local/bin/minikube
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x ./kubectl 
+mv kubectl /usr/local/bin/
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+apt update
+apt-cache policy docker-ce
+apt install docker-ce
+usermod -aG docker ubuntu
+
+minikube start --vm-driver=none
+minikube status
+
+echo "Congratulations!"
+echo "You can try something like:"
+echo "kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10"
+echo "kubectl expose deployment hello-minikube --type=NodePort --port=8080"
+echo "minikube service hello-minikube --url"
