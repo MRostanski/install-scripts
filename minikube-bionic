@@ -32,6 +32,8 @@ minikube status
 
 echo "Congratulations!"
 echo "You can try something like:"
+echo "kubectl get pods --all-namespaces"
 echo "kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10"
 echo "kubectl expose deployment hello-minikube --type=NodePort --port=8080"
+echo "kubectl get pods --all-namespaces"
 echo "minikube service hello-minikube --url"
